@@ -1,9 +1,10 @@
 pipeline {
-    agent any  // Use any available agent
+    agent any
 
     tools {
-        maven 'Maven'  // Ensure this matches the name configured in Jenkins
+        maven 'Maven'  // Matches the Maven installation name in Jenkins Global Tools
     }
+
     stages {
         stage('Checkout') {
             steps {
@@ -14,29 +15,26 @@ pipeline {
         stage('Build') {
             steps {
                 dir('MyMavenApp1') {
-                sh 'mvn clean package'  // Run Maven build
+                    sh 'mvn clean package'
+                }
             }
-        }
         }
 
         stage('Test') {
             steps {
-        dir('MyMavenApp1') {
-                sh 'mvn test'  // Run unit tests
+                dir('MyMavenApp1') {
+                    sh 'mvn test'
+                }
             }
         }
-}
-       
-       
+
         stage('Run Application') {
             steps {
                 dir('MyMavenApp1') {
-                // Start the JAR application
-                sh 'java -jar target/MyMavenJenkinsPipeline-1.0-SNAPSHOT.jar'
+                    sh 'java -jar target/MyMavenJenkinsPipeline-1.0-SNAPSHOT.jar'
+                }
             }
         }
-}
-        
     }
 
     post {

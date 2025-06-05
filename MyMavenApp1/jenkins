@@ -13,26 +13,29 @@ pipeline {
 
         stage('Build') {
             steps {
+                dir('MyMavenApp1') {
                 sh 'mvn clean package'  // Run Maven build
             }
+        }
         }
 
         stage('Test') {
             steps {
+        dir('MyMavenApp1') {
                 sh 'mvn test'  // Run unit tests
             }
         }
-
-        
-        
+}
+       
        
         stage('Run Application') {
             steps {
+                dir('MyMavenApp1') {
                 // Start the JAR application
                 sh 'java -jar target/MyMavenJenkinsPipeline-1.0-SNAPSHOT.jar'
             }
         }
-
+}
         
     }
 
